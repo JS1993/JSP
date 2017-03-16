@@ -1,0 +1,56 @@
+package com.jiangsu.jsp; 
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class doLogin extends HttpServlet {
+
+	/**
+	 * The doGet method of the servlet. <br>
+	 *
+	 * This method is called when a form has its tag value method equals to get.
+	 * 
+	 * @param request the request send by the client to the server
+	 * @param response the response send by the server to the client
+	 * @throws ServletException if an error occurred
+	 * @throws IOException if an error occurred
+	 */
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		//获取表单数据
+    	String userName = request.getParameter("userName");
+    	String pwd = request.getParameter("pwd");
+    	//处理业务逻辑&分发转向
+    	if("tom".equals(userName)&&"123".equals(pwd)){
+    		request.getSession().setAttribute("userName", userName);
+    		request.getRequestDispatcher("/home.jsp").forward(request, response);
+    	}else{
+    		response.sendRedirect(request.getContextPath()+"/login.jsp");
+    	}
+	}
+
+	/**
+	 * The doPost method of the servlet. <br>
+	 *
+	 * This method is called when a form has its tag value method equals to post.
+	 * 
+	 * @param request the request send by the client to the server
+	 * @param response the response send by the server to the client
+	 * @throws ServletException if an error occurred
+	 * @throws IOException if an error occurred
+	 */
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		doGet(request, response);
+	}
+
+}
